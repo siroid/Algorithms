@@ -1,10 +1,16 @@
 ﻿using System;
+using System.Linq;
 
 namespace ProgrammingAssignments
 {
     class Program
     {
         static void Main(string[] args)
+        {
+            StressTest(5, 10);
+        }
+
+        static void Test()
         {
             //Console.Write("Enter dimension of array: ");
             int n = int.Parse(Console.ReadLine());
@@ -19,6 +25,34 @@ namespace ProgrammingAssignments
 
             long product = MaxPairwiseProductFast(array);
             Console.WriteLine(product);
+        }
+
+        static void StressTest(int topOfArrayDimension, int topOfArrayElement)
+        {
+            while (true)
+            {
+                int n = (new Random()).Next(2, topOfArrayDimension);
+                long[] array = new long[n];
+
+                for (int i = 0; i < n; i++)
+                {
+                    array[i] = (new Random()).Next(2, topOfArrayElement);
+                }
+
+                Console.WriteLine("Elems of array: {0}", string.Join(", ", array));
+                long naiveResult = MaxPairwiseProductNaive(array);
+                long fastResult = MaxPairwiseProductFast(array);
+
+                if (naiveResult == fastResult)
+                {
+                    Console.WriteLine("OK");
+                }
+                else
+                {
+                    Console.WriteLine("Wrong answer: {0}, {1}", naiveResult, fastResult);
+                    break;
+                }
+            }
         }
 
         static long MaxPairwiseProductNaive(long[] A)
